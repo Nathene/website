@@ -165,6 +165,8 @@ defmodule WebsiteWeb.TerminalLive do
            ls               List all valid markdown targets inside the directory tree.
            tree             Display the current file system structure in a visual hierarchy.
            cat <file>       Render contents inside a custom syntax-highlighted frame.
+           whoami           Display the current user's information.
+           history          Display the current user's history.
            sysinfo          Query the underlying virtual machine for real-time telemetry.
            clear            Wipe the terminal buffer, returning prompt to the origin.
            help             Display this system reference documentation.
@@ -215,7 +217,7 @@ defmodule WebsiteWeb.TerminalLive do
       "location": "Sydney, Australia",
       "stack": ["Go", "Rust", "C++"],
       "focus": "High-throughput backend systems & low-level optimization",
-      "editor": "Neovim (Custom init.lua)",
+      "editor": "Neovim, Zed",
       "hobbies": ["Old School RuneScape", "Muay Thai", "Bouldering"]
     }
     """
@@ -243,7 +245,7 @@ defmodule WebsiteWeb.TerminalLive do
       },
       %{
         date: "Completed 2024",
-        role: "B.I.T. in Computer Science",
+        role: "B.I.T. - Computer Science",
         entity: "Macquarie University"
       }
     ]
@@ -254,7 +256,7 @@ defmodule WebsiteWeb.TerminalLive do
   defp evaluate_command("sudo", _args) do
     content = """
     nathan is not in the sudoers file.
-    This incident will be reported to.. me actually.
+    This incident will be reported to.. no one.
     """
 
     [%{type: :error, content: content}]

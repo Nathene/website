@@ -134,6 +134,21 @@ defmodule WebsiteWeb.TerminalLive do
     {:noreply, assign(socket, show_sticky: false)}
   end
 
+  def handle_event("open_desktop_resume", _, socket) do
+    pdf_viewer = """
+    <iframe
+      src="/pdfjs/web/viewer.html?file=/resume.pdf"
+      class="w-full h-full bg-[#323639] rounded-b-lg border-0"
+      title="Resume PDF"
+    ></iframe>
+    """
+
+    {:noreply,
+     assign(socket,
+       active_window: %{title: "nathan_hensby_resume.pdf", content: pdf_viewer, type: "pdf"}
+     )}
+  end
+
   defp evaluate_command("help", _args) do
     man_page = """
     NATHAN-SHELL(1)             General Commands Manual            NATHAN-SHELL(1)
@@ -188,6 +203,52 @@ defmodule WebsiteWeb.TerminalLive do
     """
 
     [%{type: :text, content: telemetry}]
+  end
+
+  defp evaluate_command("whoami", _args) do
+    # Returns a raw, formatted JSON string representing your current state
+    json_output = """
+    {
+      "name": "NATHAN HENSBY",
+      "role": "Software Engineer (Executive)",
+      "company": "Macquarie Group",
+      "location": "Sydney, Australia",
+      "stack": ["Go", "Rust", "C++"],
+      "focus": "High-throughput backend systems & low-level optimization",
+      "editor": "Neovim (Custom init.lua)",
+      "hobbies": ["Old School RuneScape", "Muay Thai", "Bouldering"]
+    }
+    """
+
+    [%{type: :json, content: json_output}]
+  end
+
+  defp evaluate_command("history", _args) do
+    # Returns a structured timeline of your career progression
+    timeline = [
+      %{
+        date: "May 2025 - Present",
+        role: "Software Engineer (Executive)",
+        entity: "Macquarie Group"
+      },
+      %{
+        date: "Nov 2023 - May 2025",
+        role: "Software Engineer (Senior Associate)",
+        entity: "Macquarie Group"
+      },
+      %{
+        date: "Jan 2022 - Nov 2023",
+        role: "Technology Associate",
+        entity: "Commonwealth Bank of Australia (CBA)"
+      },
+      %{
+        date: "Completed 2024",
+        role: "B.I.T. in Computer Science",
+        entity: "Macquarie University"
+      }
+    ]
+
+    [%{type: :history, entries: timeline}]
   end
 
   defp evaluate_command("sudo", _args) do

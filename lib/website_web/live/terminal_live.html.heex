@@ -5,7 +5,7 @@
   <%= if @show_sticky do %>
     <div
       phx-click="remove_sticky"
-      class="hidden xl:block absolute top-16 right-16 w-72 bg-[#fdf3c7] text-[#4a452a] p-5 rounded-sm shadow-[5px_5px_15px_rgba(0,0,0,0.4)] transform rotate-3 font-sans transition-transform hover:rotate-0 hover:scale-105 duration-200 z-10 group cursor-pointer"
+      class="hidden xl:block absolute top-16 right-16 w-72 bg-[#fdf3c7] text-[#4a452a] p-5 rounded-sm shadow-[10px_10px_20px_rgba(0,0,0,0.5)] transform rotate-3 font-sans transition-transform hover:rotate-0 hover:scale-105 duration-200 z-30 group cursor-pointer"
       title="Rip off sticky note"
     >
       <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 bg-[#e6d9a1] opacity-70 shadow-sm transform -rotate-2">
@@ -17,7 +17,7 @@
 
       <h3 class="font-bold text-lg mb-2 text-[#222222] mt-2">NOTE</h3>
       <p class="text-sm mb-4 leading-relaxed">
-        incase an empty temrinal scares you, refer to these to get started:
+        In case an empty terminal scares you, refer to these to get started:
       </p>
 
       <ul class="text-sm space-y-3 mb-5 font-mono text-[#333333]">
@@ -42,7 +42,7 @@
     </div>
   <% else %>
     <div
-      class="hidden xl:block absolute top-16 right-[9rem] w-32 h-12 bg-[#fdf3c7] transform rotate-3 z-0 opacity-90 shadow-sm"
+      class="hidden xl:block absolute top-16 right-[9rem] w-32 h-12 bg-[#fdf3c7] transform rotate-3 z-30 opacity-90 shadow-[5px_5px_15px_rgba(0,0,0,0.3)]"
       style="clip-path: polygon(0 0, 100% 0, 100% 60%, 88% 100%, 75% 70%, 60% 95%, 45% 55%, 30% 90%, 15% 65%, 0 85%);"
       title="You ripped off the sticky note!"
     >
@@ -53,53 +53,146 @@
       </div>
     </div>
   <% end %>
+
+  <div
+    phx-click="open_desktop_resume"
+    class="absolute top-10 left-10 flex flex-col items-center gap-1.5 w-20 cursor-pointer group z-10"
+    title="Double-click to open"
+  >
+    <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/15 group-active:bg-white/20 transition-all shadow-lg backdrop-blur-sm">
+      <svg
+        class="w-7 h-7 text-[#ff5f56]"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+        >
+        </path>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M9 9h1.5m1.5 0H15m-6 4h6m-6 4h6"
+        >
+        </path>
+      </svg>
+    </div>
+    <span class="text-[#f8f8f2] text-xs font-sans text-center tracking-wide group-hover:bg-[#204e8a] px-1.5 py-0.5 rounded transition-colors drop-shadow-md select-none">
+      Resume.pdf
+    </span>
+  </div>
+
   <%= if @active_window do %>
     <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-40 pointer-events-none overflow-hidden">
       <div
         id="movable-window"
         phx-hook="DraggableWindow"
-        class="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[70vh] bg-[#1e1e1e] border border-[#444] rounded-lg shadow-[0_25px_50px_rgba(0,0,0,0.8)] flex flex-col pointer-events-auto"
+        class="absolute top-[5vh] left-0 right-0 mx-auto w-[95vw] lg:w-[80vw] max-w-5xl h-[90vh] bg-[#1e1e1e] border border-[#444] rounded-lg shadow-[0_25px_50px_rgba(0,0,0,0.8)] flex flex-col pointer-events-auto"
       >
         <div
           id="window-handle"
-          class="h-10 bg-[#2d2d2d] rounded-t-lg flex justify-between items-center px-4 cursor-grab active:cursor-grabbing border-b border-[#111] select-none"
+          class="h-10 bg-[#2d2d2d] rounded-t-lg flex justify-between items-center px-4 cursor-grab active:cursor-grabbing border-b border-[#111] select-none shrink-0"
         >
           <div class="flex items-center gap-2 text-[#888]">
-            <span class="text-xs">📝</span>
             <span class="font-mono text-sm">{@active_window.title}</span>
           </div>
-          <button
-            phx-click="close_window"
-            class="text-[#ff5f56] hover:text-[#ff3b30] cursor-pointer"
-          >
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
+
+          <div class="flex items-center gap-3">
+            <%= if Map.get(@active_window, :type) == "pdf" do %>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                class="text-[#888] hover:text-[#8be9fd] transition-colors"
+                title="Pop out to new tab"
+                #
+                Stop
+                the
+                drag
+                event
+                from
+                firing
+                when
+                they
+                click
+                the
+                link
+                onmousedown="event.stopPropagation()"
               >
-              </path>
-            </svg>
-          </button>
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  >
+                  </path>
+                </svg>
+              </a>
+            <% end %>
+
+            <button
+              phx-click="close_window"
+              class="text-[#ff5f56] hover:text-[#ff3b30] cursor-pointer"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                >
+                </path>
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <div class="p-8 overflow-y-auto prose prose-invert prose-sm sm:prose-base max-w-none bg-[#1a1a1a] flex-grow rounded-b-lg scrollbar-thin scrollbar-thumb-[#444] scrollbar-track-[#111]">
+        <div class={[
+          "prose prose-invert prose-sm sm:prose-base max-w-none bg-[#1a1a1a] flex-grow rounded-b-lg scrollbar-thin scrollbar-thumb-[#444] scrollbar-track-[#111]",
+          if(Map.get(@active_window, :type) == "pdf",
+            do: "p-0 overflow-hidden",
+            else: "p-8 overflow-y-auto"
+          )
+        ]}>
           {raw(@active_window.content)}
         </div>
       </div>
     </div>
   <% end %>
+
   <div class="w-full max-w-5xl h-[85vh] bg-[#0a0a0a] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-[#333333] flex flex-col overflow-hidden text-sm sm:text-base leading-relaxed selection:bg-[#444444] selection:text-white z-20">
-    <div class="h-10 bg-[#1a1a1a] border-b border-[#333333] flex items-center px-4 shrink-0 select-none">
-      <div class="flex gap-2">
+    <div class="h-10 bg-[#1a1a1a] border-b border-[#333333] flex items-center justify-between px-4 shrink-0 select-none">
+      <div class="flex gap-2 w-20">
         <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
         <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
         <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
       </div>
-      <div class="flex-1 text-center text-[#888888] text-xs font-semibold mr-16">
+      <div class="flex-1 text-center text-[#888888] text-xs font-semibold px-2 truncate">
         nathan@macbook-pro : ~/resume
       </div>
+      <div class="w-20 flex justify-end">
+        <button
+          phx-click="execute"
+          phx-value-command="help"
+          class="xl:hidden text-[#888888] hover:text-[#50fa7b] font-mono text-[10px] sm:text-xs border border-[#444] rounded px-2 py-0.5 bg-[#2a2a2a] shadow-sm active:bg-[#111] transition-colors flex items-center gap-1"
+          title="Show commands"
+        >
+          <span class="opacity-70">?</span> help
+        </button>
+      </div>
     </div>
+
     <div
       class="flex-grow overflow-y-auto p-4 sm:p-6 hide-scrollbars"
       id="terminal-output"
@@ -123,6 +216,34 @@
             <%= if line.type == :ascii do %>
               <div class="overflow-x-auto hide-scrollbars">
                 <pre class="whitespace-pre text-[#8be9fd] font-bold font-mono leading-tight mt-2 mb-4 drop-shadow-md">{line.content}</pre>
+              </div>
+            <% end %>
+
+            <%= if line.type == :json do %>
+              <div class="mt-3 mb-5 pl-4 border-l-2 border-[#bd93f9]">
+                <pre class="whitespace-pre-wrap text-[#f1fa8c] font-mono text-sm leading-relaxed"><%= line.content %></pre>
+              </div>
+            <% end %>
+
+            <%= if line.type == :history do %>
+              <div class="mt-4 mb-6 relative border-l-2 border-[#444444] ml-3 pl-5 space-y-6 font-mono text-sm">
+                <%= for entry <- line.entries do %>
+                  <div class="relative group">
+                    <div class="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#ff79c6] border-2 border-[#0a0a0a] group-hover:scale-125 transition-transform shadow-[0_0_8px_rgba(255,121,198,0.6)]">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+                      <span class="text-[#8be9fd] font-bold min-w-[160px] tracking-wide">
+                        {entry.date}
+                      </span>
+                      <div class="flex flex-col sm:flex-row sm:gap-2">
+                        <span class="text-[#f8f8f2] font-semibold">{entry.role}</span>
+                        <span class="text-[#6272a4] hidden sm:inline">|</span>
+                        <span class="text-[#ffb86c]">{entry.entity}</span>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
               </div>
             <% end %>
 

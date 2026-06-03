@@ -50,6 +50,8 @@ Hooks.TerminalInput = {
       "tree",
       "sudo",
       "open",
+      "whoami",
+      "history",
     ];
 
     // Global focus lock

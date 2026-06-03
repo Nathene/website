@@ -217,7 +217,7 @@ defmodule WebsiteWeb.TerminalLive do
       "location": "Sydney, Australia",
       "stack": ["Go", "Rust", "C++"],
       "focus": "High-throughput backend systems & low-level optimization",
-      "editor": "Neovim, Zed",
+      "editor": "[Neovim, Zed]",
       "hobbies": ["Old School RuneScape", "Muay Thai", "Bouldering"]
     }
     """

@@ -244,7 +244,7 @@ defmodule WebsiteWeb.TerminalLive do
         entity: "Commonwealth Bank of Australia (CBA)"
       },
       %{
-        date: "Completed 2024",
+        date: "Jan 2020 - July 2024",
         role: "B.I.T. - Computer Science",
         entity: "Macquarie University"
       }
